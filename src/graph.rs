@@ -5,6 +5,7 @@ use crate::index::Index;
 use std::collections::{HashMap, HashSet};
 use std::hash::Hash;
 use std::fmt::Debug;
+use serde::{Serialize, Deserialize};
 
 /// A basic error enum with different potential error types and a tuple 
 /// variant for one-off and less predicatble error types
@@ -40,7 +41,7 @@ pub type GraphResult<Ix> = Result<GraphOk<Ix>, GraphError>;
 ///println!("{:?}", graph);
 ///assert!(graph.len() == 0);
 ///```
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BullDag<T: Clone + Debug, Ix: Index + Debug> {
     roots: HashSet<Ix>,
     leaves: HashSet<Ix>,
