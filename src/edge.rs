@@ -1,7 +1,8 @@
 use crate::index::Index;
 use std::fmt::Debug;
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Debug, Hash, PartialEq, Eq)]
+#[derive(Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq)]
 pub struct Edge<Ix: Index + Debug> {
     source: Ix,
     reference: Ix,

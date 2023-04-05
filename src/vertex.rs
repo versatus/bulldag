@@ -2,6 +2,7 @@ use crate::edge::Edge;
 use crate::index::Index;
 use std::collections::HashSet;
 use std::fmt::Debug;
+use serde::{Serialize, Deserialize};
 
 pub type Edges<T, Ix> = Vec<(Vertex<T, Ix>, Vertex<T, Ix>)>;
 pub enum Direction {
@@ -28,7 +29,7 @@ pub enum Direction {
 ///println!("{:?}", vertex);
 /// ```
 ///
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Vertex<T, Ix> 
 where
     T: Clone + Debug, 
