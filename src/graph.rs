@@ -243,7 +243,7 @@ where
 
     /// Adds a single vertex to the graph 
     ///Example:
-    fn add_vertex(&mut self, vertex: &Vertex<T, Ix>) {
+    pub fn add_vertex(&mut self, vertex: &Vertex<T, Ix>) {
         if vertex.get_sources().is_empty() {
             self.add_root(vertex.get_index());
         }
