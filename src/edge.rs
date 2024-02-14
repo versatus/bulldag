@@ -1,6 +1,6 @@
 use crate::index::Index;
+use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
-use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq)]
 pub struct Edge<Ix: Index + Debug> {
@@ -10,10 +10,7 @@ pub struct Edge<Ix: Index + Debug> {
 
 impl<Ix: Index + Debug> Edge<Ix> {
     pub fn new(source: Ix, reference: Ix) -> Edge<Ix> {
-        Edge {
-            source,
-            reference
-        }
+        Edge { source, reference }
     }
 
     pub fn get_reference(&self) -> Ix {
@@ -24,4 +21,3 @@ impl<Ix: Index + Debug> Edge<Ix> {
         self.source.clone()
     }
 }
-

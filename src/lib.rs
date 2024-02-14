@@ -1,15 +1,15 @@
-pub mod graph;
-pub mod node;
 pub mod edge;
-pub mod vertex;
+pub mod graph;
 pub mod index;
+pub mod node;
+pub mod vertex;
 
 #[cfg(test)]
 mod tests {
     #![allow(dead_code)]
     use crate::graph::BullDag;
-    use crate::vertex::Vertex;
     use crate::graph::GraphOk;
+    use crate::vertex::Vertex;
 
     #[test]
     fn create_new_dag() {
@@ -19,19 +19,18 @@ mod tests {
 
     #[test]
     fn test_add_cyclic_edge_fails() {
-
         let mut graph: BullDag<usize, &str> = BullDag::new();
         let v1: Vertex<usize, &str> = Vertex::new(5, "source");
         let v2: Vertex<usize, &str> = Vertex::new(4, "reference");
         let v3: Vertex<usize, &str> = Vertex::new(3, "ultimate_source");
-        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference"); 
+        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference");
         let v5: Vertex<usize, &str> = Vertex::new(1, "new_reference");
         let v6: Vertex<usize, &str> = Vertex::new(0, "cycle_ref");
         let v7: Vertex<usize, &str> = Vertex::new(6, "cycle_source");
         let edges = vec![
-            (&v1, &v2), 
-            (&v3, &v1), 
-            (&v2, &v4), 
+            (&v1, &v2),
+            (&v3, &v1),
+            (&v2, &v4),
             (&v3, &v4),
             (&v4, &v5),
             (&v5, &v6),
@@ -39,28 +38,28 @@ mod tests {
             (&v6, &v1),
         ];
 
-        graph.extend_from_edges(edges);
+        graph.extend_from_edges(&edges);
         assert!(graph.n_edges() == 7);
     }
-    
+
     #[test]
     fn test_add_acyclic_edge_works() {
         let mut graph: BullDag<usize, &str> = BullDag::new();
         let v1: Vertex<usize, &str> = Vertex::new(5, "source");
         let v2: Vertex<usize, &str> = Vertex::new(4, "reference");
         let v3: Vertex<usize, &str> = Vertex::new(3, "ultimate_source");
-        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference"); 
+        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference");
         let v5: Vertex<usize, &str> = Vertex::new(1, "new_reference");
         let edges = vec![
-            (&v1, &v2), 
-            (&v3, &v1), 
-            (&v3, &v2), 
+            (&v1, &v2),
+            (&v3, &v1),
+            (&v3, &v2),
             (&v2, &v4),
             (&v2, &v5),
-            (&v1, &v5)
+            (&v1, &v5),
         ];
 
-        graph.extend_from_edges(edges);
+        graph.extend_from_edges(&edges);
 
         assert!(graph.n_edges() == 6);
     }
@@ -71,18 +70,18 @@ mod tests {
         let v1: Vertex<usize, &str> = Vertex::new(5, "source");
         let v2: Vertex<usize, &str> = Vertex::new(4, "reference");
         let v3: Vertex<usize, &str> = Vertex::new(3, "ultimate_source");
-        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference"); 
+        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference");
         let v5: Vertex<usize, &str> = Vertex::new(1, "new_reference");
         let edges = vec![
-            (&v1, &v2), 
-            (&v3, &v1), 
-            (&v3, &v2), 
+            (&v1, &v2),
+            (&v3, &v1),
+            (&v3, &v2),
             (&v2, &v4),
             (&v2, &v5),
-            (&v1, &v5)
+            (&v1, &v5),
         ];
 
-        graph.extend_from_edges(edges);
+        graph.extend_from_edges(&edges);
 
         assert!(graph.len() == 5);
     }
@@ -93,20 +92,20 @@ mod tests {
         let v1: Vertex<usize, &str> = Vertex::new(5, "source");
         let v2: Vertex<usize, &str> = Vertex::new(4, "reference");
         let v3: Vertex<usize, &str> = Vertex::new(3, "ultimate_source");
-        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference"); 
+        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference");
         let v5: Vertex<usize, &str> = Vertex::new(1, "new_reference");
         let edges = vec![
-            (&v1, &v2), 
-            (&v3, &v1), 
-            (&v3, &v2), 
+            (&v1, &v2),
+            (&v3, &v1),
+            (&v3, &v2),
             (&v2, &v4),
             (&v2, &v5),
-            (&v1, &v5)
+            (&v1, &v5),
         ];
 
-        graph.extend_from_edges(edges);
+        graph.extend_from_edges(&edges);
 
-        let target = graph.get_vertex("source"); 
+        let target = graph.get_vertex("source");
         if target.is_some() {
             assert!(target.unwrap().is_reference(&v2.get_index()));
             assert!(target.unwrap().is_reference(&v5.get_index()));
@@ -121,20 +120,20 @@ mod tests {
         let v1: Vertex<usize, &str> = Vertex::new(5, "source");
         let v2: Vertex<usize, &str> = Vertex::new(4, "reference");
         let v3: Vertex<usize, &str> = Vertex::new(3, "ultimate_source");
-        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference"); 
+        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference");
         let v5: Vertex<usize, &str> = Vertex::new(1, "new_reference");
         let edges = vec![
-            (&v1, &v2), 
-            (&v3, &v1), 
-            (&v3, &v2), 
+            (&v1, &v2),
+            (&v3, &v1),
+            (&v3, &v2),
             (&v2, &v4),
             (&v2, &v5),
-            (&v1, &v5)
+            (&v1, &v5),
         ];
 
-        graph.extend_from_edges(edges);
+        graph.extend_from_edges(&edges);
 
-        let target = graph.get_vertex("source"); 
+        let target = graph.get_vertex("source");
         if target.is_some() {
             assert!(target.unwrap().is_source(&v3.get_index()));
         } else {
@@ -144,9 +143,7 @@ mod tests {
 
     #[ignore]
     #[test]
-    fn test_get_vertex_dfs() {
-
-    }
+    fn test_get_vertex_dfs() {}
 
     #[test]
     fn test_get_topological_order() {
@@ -154,41 +151,37 @@ mod tests {
         let v1: Vertex<usize, &str> = Vertex::new(5, "source");
         let v2: Vertex<usize, &str> = Vertex::new(4, "reference");
         let v3: Vertex<usize, &str> = Vertex::new(3, "ultimate_source");
-        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference"); 
+        let v4: Vertex<usize, &str> = Vertex::new(2, "ref_reference");
         let v5: Vertex<usize, &str> = Vertex::new(1, "new_reference");
         let edges = vec![
-            (&v1, &v2), 
-            (&v3, &v1), 
-            (&v3, &v2), 
+            (&v1, &v2),
+            (&v3, &v1),
+            (&v3, &v2),
             (&v2, &v4),
             (&v2, &v5),
-            (&v1, &v5)
+            (&v1, &v5),
         ];
 
-        graph.extend_from_edges(edges);
+        graph.extend_from_edges(&edges);
 
         let opt_1 = vec![
-            "ultimate_source", 
-            "source", 
-            "reference", 
-            "new_reference", 
-            "ref_reference"
+            "ultimate_source",
+            "source",
+            "reference",
+            "new_reference",
+            "ref_reference",
         ];
 
         let opt_2 = vec![
-            "ultimate_source", 
-            "source", 
-            "reference", 
+            "ultimate_source",
+            "source",
+            "reference",
             "ref_reference",
-            "new_reference" 
+            "new_reference",
         ];
 
         if let Ok(GraphOk::VecRes(v)) = graph.topological_sort() {
-
-            assert!(
-                (v == opt_1 || 
-                 v == opt_2)
-            );
+            assert!((v == opt_1 || v == opt_2));
         }
     }
 }
